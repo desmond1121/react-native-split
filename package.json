@@ -1,0 +1,33 @@
+{
+  "name": "react-native-split",
+  "version": "1.0.0",
+  "description": "React native bundle split tool.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "node_modules/.bin/flow",
+    "test": "jest"
+  },
+  "author": "Desmond Yao",
+  "license": "ISC",
+  "jest": {
+    "setupFiles": [
+      "./jest/setup.js"
+    ]
+  },
+  "dependencies": {
+    "babel-register": "^6.24.1",
+    "babylon": "^6.16.1",
+    "commander": "^2.9.0",
+    "minimatch": "^3.0.3",
+    "uglify-js": "^2.8.22"
+  },
+  "devDependencies": {
+    "babel-jest": "^19.0.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-es2015-node": "^6.1.1",
+    "eslint": "^3.19.0",
+    "flow-bin": "^0.43.1",
+    "jest": "^19.0.2",
+    "regenerator-runtime": "^0.10.3"
+  }
+}

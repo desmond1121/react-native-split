@@ -1,0 +1,14 @@
+[ignore]
+; Ignore the example subdir
+<PROJECT_ROOT>/example/.*
+
+; Ignore vscode config dirs
+<PROJECT_ROOT>/\.vscode/
+
+; Ignore unexpected extra "@providesModule"
+.*/node_modules/.*/node_modules/fbjs/.*
+
+[include]
+
+[version]
+^0.43.1
