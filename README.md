@@ -1,5 +1,7 @@
 # React Native Bundle Splitter
 
+Split config: [splitconfig](./split-example/.splitconfig).
+
 ## WIP
 
 Still work in progress. Now only have Android Example.
