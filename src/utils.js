@@ -116,6 +116,17 @@ export function isModuleDeclaration(node : any) : boolean {
   }
 }
 
+export function replaceModuleIdWithName(codeBlob : string, modules : any) : string {
+  let dependencies = getModuleDependencyCodeRange(codeBlob, 0, codeBlob.length);
+  if (dependencies) {
+    dependencies.forEach(deps => {
+      let moduleName = modules[deps.module].name;
+      codeBlob = codeBlob.replace(deps.code, 'require(\"' + moduleName + '\")');
+    });
+  }
+  return codeBlob;
+}
+
 export function getModuleDependency(codeBlob : string, start : number, end : number) : Array<number> {
   const dependency = [];
   const bodyString = codeBlob.substring(start, end);

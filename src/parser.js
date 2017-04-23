@@ -39,6 +39,7 @@ type Module = {
   name: string,
   dependencies: Array<string>,
   code: CodeRange,
+  idCodeRange: CodeRange,
   isAsset ?: boolean,
   assetConfig ?: Asset
 };
@@ -119,7 +120,6 @@ class Parser {
     const customEntry = [];
     let reactEntryModule = undefined;
     let moduleCount = 0;
-    
     body.forEach(node => {
       if (Util.isEmptyStmt(node)) {
         return;
@@ -140,7 +140,11 @@ class Parser {
           id: moduleId,
           name: moduleName,
           dependencies: this._getModuleDependency(args[0].body),
-          code: {start, end}
+          code: {start, end},
+          idCodeRange: {
+            start: args[1].start - node.start,
+            end: args[1].end - node.start
+          }
         };
         
         if (Util.isAssetModule(moduleName)) {
@@ -358,6 +362,9 @@ class Parser {
     this._base.forEach(moduleId => {
       const module : Module = this._modules[moduleId];
       let code = this._codeBlob.substring(module.code.start, module.code.end);
+      code = code.substring(0, module.idCodeRange.start) +
+          '\"' + module.name + '\"'
+          + code.substring(module.idCodeRange.end);
       if (module.isAsset && !!module.assetConfig) {
         assetRenames = this._getAssetRenames(module.assetConfig, bundleName);
         code = this._addBundleToAsset(module, bundleName, code);
@@ -369,10 +376,13 @@ class Parser {
           }
         }
       }
+      code = Util.replaceModuleIdWithName(code, this._modules);
       codes.push(code);
     });
     this._moduleCalls.forEach(moduleCall => {
-      codes.push(this._codeBlob.substring(moduleCall.start, moduleCall.end));
+      let code = this._codeBlob.substring(moduleCall.start, moduleCall.end);
+      code = Util.replaceModuleIdWithName(code, this._modules);
+      codes.push(code);
     });
     this._bundles.push({
       name: bundleName,
@@ -388,13 +398,18 @@ class Parser {
     entry.moduleSet.forEach(moduleId => {
       const module : Module = this._modules[moduleId];
       let code = this._codeBlob.substring(module.code.start, module.code.end);
+      code = code.substring(0, module.idCodeRange.start) +
+        '\"' + module.name + '\"'
+        + code.substring(module.idCodeRange.end);
       if (module.isAsset && module.assetConfig) {
         assetRenames = assetRenames.concat(this._getAssetRenames(module.assetConfig, bundleName));
         code = this._addBundleToAsset(module, bundleName, code);
       }
+      code = Util.replaceModuleIdWithName(code, this._modules);
       codes.push(code);
     });
-    codes.push('\nrequire(' + entry.moduleId + ');');
+    let entryModuleName = this._modules[entry.moduleId].name;
+    codes.push('\nrequire(\"' + entryModuleName + '\");');
     this._bundles.push({
       name: bundleName,
       codes,
@@ -408,13 +423,18 @@ class Parser {
     let assetRenames = [];
     for (let moduleId in this._modules) {
       let moduleIdInt = parseInt(moduleId);
+      
       if (this._modules.hasOwnProperty(moduleId) && !this._base.has(moduleIdInt)) {
         const module : Module = this._modules[moduleIdInt];
         let code = this._codeBlob.substring(module.code.start, module.code.end);
+        code = code.substring(0, module.idCodeRange.start) +
+          '\"' + module.name + '\"'
+          + code.substring(module.idCodeRange.end);
         if (module.isAsset && module.assetConfig) {
           assetRenames = this._getAssetRenames(module.assetConfig, bundleName);
           code = this._addBundleToAsset(module, bundleName, code);
         }
+        code = Util.replaceModuleIdWithName(code, this._modules)
         codes.push(code);
       }
     }

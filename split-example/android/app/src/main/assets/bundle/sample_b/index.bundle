@@ -1,5 +1,53 @@
-__d(function(global,require,module,exports){var _react=require(282),_react2=babelHelpers.interopRequireDefault(_react),_reactNative=require(12),_ApiOfSampleB=require(410),_ApiOfSampleB2=babelHelpers.interopRequireDefault(_ApiOfSampleB),_modules=require(402),SampleB=function(_React$Component){function SampleB(){babelHelpers.classCallCheck(this,SampleB);return babelHelpers.possibleConstructorReturn(this,(SampleB.__proto__||Object.getPrototypeOf(SampleB)).apply(this,arguments))}babelHelpers.inherits(SampleB,_React$Component);babelHelpers.createClass(SampleB,[{key:"render",value:function(){(0,_modules.FuncA)();(0,_modules.FuncB)();(0,
-_ApiOfSampleB2.default)();return _react2.default.createElement(_reactNative.View,null,_react2.default.createElement(_reactNative.Text,null,"This is MainB"))}}]);return SampleB}(_react2.default.Component);require(352).registerComponent("SampleB",function(){return SampleB});module.exports=SampleB},409,null,"example/src/components/packageb/SampleB.js");
-__d(function(global,require,module,exports){module.exports=function(){console.log("ApiOfComponentB called!")}},410,null,"example/src/components/packageb/ApiOfSampleB.js");
+__d(/* example/src/components/packageb/SampleB.js */function(global, require, module, exports) {var _react = require("react/react.js"); // 282 = react
 
-require(409);
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require("react-native/Libraries/react-native/react-native.js"); // 12 = react-native
+
+var _ApiOfSampleB = require("example/src/components/packageb/ApiOfSampleB.js"); // 410 = ./ApiOfSampleB
+
+var _ApiOfSampleB2 = babelHelpers.interopRequireDefault(_ApiOfSampleB);
+
+var _modules = require("example/src/modules/index.js"); // 402 = example/src/modules
+
+var SampleB = function (_React$Component) {
+  babelHelpers.inherits(SampleB, _React$Component);
+
+  function SampleB() {
+    babelHelpers.classCallCheck(this, SampleB);
+    return babelHelpers.possibleConstructorReturn(this, (SampleB.__proto__ || Object.getPrototypeOf(SampleB)).apply(this, arguments));
+  }
+
+  babelHelpers.createClass(SampleB, [{
+    key: 'render',
+    value: function render() {
+      (0, _modules.FuncA)();
+      (0, _modules.FuncB)();
+      (0, _ApiOfSampleB2.default)();
+      return _react2.default.createElement(
+        _reactNative.View,
+        null,
+        _react2.default.createElement(
+          _reactNative.Text,
+          null,
+          'This is MainB'
+        )
+      );
+    }
+  }]);
+  return SampleB;
+}(_react2.default.Component);
+
+var AppRegistry = require("AppRegistry"); // 352 = AppRegistry
+AppRegistry.registerComponent('SampleB', function () {
+  return SampleB;
+});
+
+module.exports = SampleB;
+}, "example/src/components/packageb/SampleB.js", null, "example/src/components/packageb/SampleB.js");
+__d(/* example/src/components/packageb/ApiOfSampleB.js */function(global, require, module, exports) {module.exports = function () {
+  console.log('ApiOfComponentB called!');
+};
+}, "example/src/components/packageb/ApiOfSampleB.js", null, "example/src/components/packageb/ApiOfSampleB.js");
+
+require("example/src/components/packageb/SampleB.js");

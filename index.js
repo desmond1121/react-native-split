@@ -16,7 +16,7 @@ commander
   .option('--output <path>', 'Path to store bundle.', 'build')
   .option('--config <path>', 'Config file for react-native-split.')
   .option('--platform', 'Specify bundle platform. ', 'android')
-  .option('--dev', 'Generate dev module.', 'false')
+  .option('--dev [boolean]', 'Generate dev module.')
   .parse(process.argv);
 
 if (!commander.config) {
@@ -58,12 +58,12 @@ const config = {
   },
   customEntries : rawConfig.custom
 };
-
 if (!isFileExists(config.baseEntry.index)) {
   console.log('Index of base does not exists!');
 }
 
 console.log('Work on root: ' + config.root);
+console.log('Dev mode: ' + config.dev);
 bundle(config, (err, data) => {
   if (err) throw err;
   console.log('===[Bundle] Finish!===');
