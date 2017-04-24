@@ -1,6 +1,6 @@
 #!/bin/bash
 
-node ../index.js --platform android --output build --config .splitconfig --dev false
+node ../index.js --platform android --output build --config .splitconfig --dev true
 
 mkdirs android/app/src/main/assets/bundle
 rm -rf android/app/src/main/assets/bundle/*

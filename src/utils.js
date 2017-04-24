@@ -9,13 +9,17 @@ const path = require('path');
 const MODULE_REGEX = /require\s?\(([0-9]+)[^)]*\)/g;
 const EXPR_STMT = 'ExpressionStatement';
 const EMPTY_STMT = 'EmptyStatement';
+const IF_STMT = 'IfStatement';
 
+const BINARY_EXPR = 'BinaryExpression';
+const LOGICAL_EXPR = 'LogicalExpression';
 const UNARY_EXPR = 'UnaryExpression';
 const CALL_EXPR = 'CallExpression';
 const FUNC_EXPR = 'FunctionExpression';
 const COND_EXPR = 'ConditionalExpression';
 const IDENTIFIER = 'Identifier';
 const LITERAL_NUM = 'NumericLiteral';
+const LITERAL_STR = 'StringLiteral';
 
 import type {Config} from '../flow/types';
 
@@ -79,6 +83,25 @@ export function isModuleCall(node : any) : boolean {
       && node.expression.arguments[0].type === LITERAL_NUM;
   } catch (e) {
     return false;
+  }
+}
+
+export function isRequirePolyfillCondition(node: any, dev: boolean) : boolean {
+  if (node.type === IF_STMT
+    && node.test.type === LOGICAL_EXPR
+    && node.test.left.name === '__DEV__'
+    && node.test.operator === '&&'
+    && node.test.right.type === BINARY_EXPR) {
+    let binaryExpr = node.test.right;
+    if (dev) {
+      return binaryExpr.left.operator === 'typeof'
+        && binaryExpr.operator === '==='
+        && binaryExpr.right.type === LITERAL_STR;
+    } else {
+      return binaryExpr.left.type === LITERAL_STR
+      && binaryExpr.operator === '=='
+      && binaryExpr.right.operator === 'typeof';
+    }
   }
 }
 

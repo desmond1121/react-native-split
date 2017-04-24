@@ -1,6 +1,7 @@
 //@flow
 
 const babylon = require('babylon');
+const traverse = require('babel-traverse').default;
 const path = require('path');
 const minimatch = require('minimatch');
 const Util = require('./utils');
@@ -353,11 +354,29 @@ class Parser {
   
   _splitBase() {
     const bundleName = 'base';
+    const dev = this._config.dev;
     let codes = [];
     let assetRenames = [];
     // append codes to base
-    this._polyfills.forEach(range => {
-      codes.push(this._codeBlob.substring(range.start, range.end));
+    this._polyfills.forEach((range, index) => {
+      let code = this._codeBlob.substring(range.start, range.end);
+      if (index === 1) {
+        let requireAST = babylon.parse(code);
+        let conditionNode;
+        traverse(requireAST, {
+          enter(path) {
+            if (Util.isRequirePolyfillCondition(path.node, dev)) {
+              conditionNode = path.node;
+            }
+          },
+          exit(path) { }
+        });
+        if (conditionNode) {
+          code = code.substring(0, conditionNode.start)
+            + code.substring(conditionNode.end);
+        }
+      }
+      codes.push(code);
     });
     this._base.forEach(moduleId => {
       const module : Module = this._modules[moduleId];

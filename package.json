@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "babel-register": "^6.24.1",
+    "babel-traverse": "^6.24.1",
     "babylon": "^6.16.1",
     "commander": "^2.9.0",
     "minimatch": "^3.0.3",

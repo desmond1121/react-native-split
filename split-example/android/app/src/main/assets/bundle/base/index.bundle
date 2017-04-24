@@ -39,15 +39,7 @@ function define(factory, moduleId, dependencyMap) {
 }
 
 function _require(moduleId) {
-  if (__DEV__ && typeof moduleId === 'string') {
-    var _verboseName2 = moduleId;
-    moduleId = verboseNamesToModuleIds[moduleId];
-    if (moduleId == null) {
-      throw new Error('Unknown named module: \'' + _verboseName2 + '\'');
-    } else {
-      console.warn('Requiring module \'' + _verboseName2 + '\' by name is only supported for ' + 'debugging purposes and will BREAK IN PRODUCTION!');
-    }
-  }
+  
 
   var moduleIdReallyIsNumber = moduleId;
   var module = modules[moduleIdReallyIsNumber];
