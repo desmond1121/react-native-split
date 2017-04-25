@@ -23,6 +23,5 @@ export type Config = {
   outputDir: string,
   bundleDir: string,
   baseEntry: BaseEntry,
-  baseVersion: string,
   customEntries: Array<CustomEntry>
 };

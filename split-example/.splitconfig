@@ -1,7 +1,6 @@
 {
   "package": "example",
   "base": {
-    "version": "0.0.1",
     "index": "./src/base.js",
     "includes": [
       "./src/modules/*"

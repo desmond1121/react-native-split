@@ -56,7 +56,6 @@ const config = {
     index: rawConfig.base.index,
     includes: rawConfig.base.includes
   },
-  baseVersion: rawConfig.base.version,
   customEntries : rawConfig.custom
 };
 if (!isFileExists(config.baseEntry.index)) {
