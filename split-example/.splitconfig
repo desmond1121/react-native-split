@@ -1,17 +1,16 @@
 {
   "package": "example",
   "base": {
+    "version": "0.0.1",
     "index": "./src/base.js",
     "includes": [
       "./src/modules/*"
     ]
   },
   "custom": [{
-    "id": 1,
     "name": "sample_a",
     "index": "./src/components/packagea/SampleA.js"
   }, {
-    "id": 2,
     "name": "sample_b",
     "index": "./src/components/packageb/SampleB.js"
   }]

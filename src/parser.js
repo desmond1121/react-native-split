@@ -101,6 +101,10 @@ class Parser {
       
       const codePath = path.resolve(subBundlePath, 'index.bundle');
       fs.writeFileSync(codePath, code);
+      const metaPath = path.resolve(subBundlePath, 'meta.json');
+      fs.writeFileSync(metaPath, JSON.stringify({
+        base_version: this._config.baseVersion
+      }));
       console.log('[Code] Write code to ' + codePath);
       if (subBundle.assetRenames) {
         subBundle.assetRenames.forEach(item => {
