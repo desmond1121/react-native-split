@@ -2,9 +2,29 @@
 
 Split config: [splitconfig](./split-example/.splitconfig).
 
-## WIP
+## WIP 
 
-Still work in progress. Now only have Android Example.
+Now only have Android Example.
+
+## Project Structure
+
+```
+/root
+ |- /src
+   |- /components
+     |- /packagea
+       |- SampleA.js      => Entry1
+       |- ApiOfSampleA.js => Refered in SampleA.js
+     |- /packageb
+       |- SampleB         => Entry2
+       |- ApiOfSampleA.js => Refered in SampleA.js
+   |- /modules 
+     |- index.js      => Append to base
+     |- ModuleA.js    => Refered in index.js
+     |- ModuleB.js    => Refered in index.js
+ |- base.js          => Entry of base
+ |- resolveInject.js => Resolve splitted resource
+```
 
 ## Usage
 
