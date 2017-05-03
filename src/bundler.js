@@ -64,10 +64,9 @@ function bundle(config: Config, callback: Callback) : void {
       code = UglifyJS.minify(bundlePath, {
         compress: {
           sequences: false,
-          dead_code: true,
-          booleans: true,
-          conditionals: true,
-          if_return: true
+          global_defs: {
+            __DEV__: false
+          }
         },
         mangle: false
       }).code;
