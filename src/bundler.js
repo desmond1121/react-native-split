@@ -68,7 +68,9 @@ function bundle(config: Config, callback: Callback) : void {
             __DEV__: false
           }
         },
-        mangle: false
+        mangle: {
+          except: ['__d', 'require', '__DEV__']
+        }
       }).code;
       fs.writeFileSync(bundlePath + '.min', code, 'utf-8');
     }

@@ -112,7 +112,6 @@ export function isPolyfillCall(node : any, dev : boolean) : boolean {
         && expr.callee.type === FUNC_EXPR
         && expr.callee.params.length === 1
         && expr.callee.params[0].type === IDENTIFIER
-        && expr.callee.params[0].name === 'global'
         && expr.arguments.length === 1
         && expr.arguments[0].type === COND_EXPR;
     };
