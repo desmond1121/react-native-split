@@ -2,9 +2,16 @@
 
 Split config: [splitconfig](./split-example/.splitconfig).
 
-## WIP 
+## Why just an EXAMPLE (not a complete library)
 
-Now only have Android Example.
+RN Bundle split is not just "split", it should also take two point into consideration:
+
+- **How to use them**, means native code framework change, because RN native part not support loading script in demand.
+- **Project structure**, you should have a clean project dependency graph (recursive dependency is bad).
+
+So, I don't want to make it to a library which be common to use.
+ 
+In this example, it have clear project structure and some hack to RN framework (by reflection in Java). All split-bundle related code is in **src** directory.
 
 ## Project Structure
 
@@ -41,4 +48,20 @@ cd split-example
 npm install
 ./run-example.sh
 ```
+
+## License
+
+Copyright 2015 Desmond Yao
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
