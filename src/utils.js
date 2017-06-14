@@ -197,6 +197,21 @@ export function ensureFolder(dir : string) {
   }
 }
 
+/**
+ * 递归创建目录 同步方法
+ */
+export function mkdirsSync(dirname) {  
+    //console.log(dirname);  
+    if (fs.existsSync(dirname)) {  
+        return true;  
+    } else {  
+        if (mkdirsSync(path.dirname(dirname))) {  
+            fs.mkdirSync(dirname);  
+            return true;  
+        }  
+    }  
+}
+
 // export function resolvePathArrays(root: string, array : Array<any>, val ?: string) : Array<any> {
 //   const newArr = [];
 //   array.forEach(item => {

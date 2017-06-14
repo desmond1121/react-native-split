@@ -122,7 +122,7 @@ class Parser {
       if (subBundle.assetRenames) {
         subBundle.assetRenames.forEach(item => {
           const assetNewDir = path.dirname(item.newPath);
-          Util.ensureFolder(assetNewDir);
+          Util.mkdirsSync(assetNewDir);
           console.log('[Resource] Move resource ' + item.originPath + ' to ' + item.newPath);
           fs.createReadStream(item.originPath).pipe(fs.createWriteStream(item.newPath));
         });
@@ -351,9 +351,28 @@ class Parser {
           });
         }
       )
+    } else {
+      console.log('Get ios asset renames', asset);
+      asset.scales.forEach(scale => {
+        const relativePath = this._getAssetDestPathIOS(asset, scale);
+        const originPath = path.resolve(this._config.bundleDir, relativePath);
+        if(Util.ensureFolder(originPath)) {
+          assetRenames.push({
+            originPath,
+            relativePath: relativePath,
+            newPath: path.resolve(this._config.outputDir, bundle, relativePath)
+          });
+        }
+      });
     }
     
     return assetRenames;
+  }
+
+  _getAssetDestPathIOS(asset, scale) {
+    const suffix = scale === 1 ? '' : '@' + scale + 'x';
+    const fileName = asset.name + suffix + '.' + asset.type;
+    return path.join(asset.httpServerLocation.substr(1), fileName);
   }
   
   _doSplit() {
